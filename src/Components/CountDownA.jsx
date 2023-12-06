@@ -28,8 +28,7 @@ const CountDownA = ({ token }) => {
       ) {
         clearInterval(timer);
         // Timer reaches 0 logic here
-        navigate("/parkingGuide");
-        setQueue(queue - 1);
+        navigate("/parkingGuide", { state: { from: "/joinQueue/countDownA" } });
       } else {
         setTimeLeft((prevTime) => {
           let hours = prevTime.hours;
