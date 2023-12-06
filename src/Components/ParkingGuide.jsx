@@ -1,7 +1,36 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../utils/client";
+
 function ParkingGuide({ token }) {
   const navigate = useNavigate();
+  const [fetchError, setFetchError] = useState(null);
+  const [zoneName, setZoneName] = useState(null);
+
+  useEffect(() => {
+    const fetchColumnData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("Parking Lot A") // Replace with your table name
+          .select("waiting_time"); // Replace with the column name you want to fetch
+
+        if (error) {
+          console.error("Error fetching data:", error.message);
+          return;
+        }
+
+        if (data) {
+          // Handle the retrieved data here
+          console.log("Data from column:", data[0]);
+          // Or use it as needed in your application
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      }
+    };
+
+    fetchColumnData();
+  }, []);
 
   const backHome = () => {
     navigate("/homePage");
